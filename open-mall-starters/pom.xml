@@ -14,10 +14,12 @@
     <modules>
         <module>open-mall-common-starter</module>
         <module>open-mall-web-starter</module>
+        <module>open-mall-security-starter</module>
     </modules>
     <properties>
         <hutool.version>5.8.26</hutool.version>
         <knife4j.version>4.5.0</knife4j.version>
+
     </properties>
 
     <dependencyManagement>
@@ -33,6 +35,17 @@
                 <version>${knife4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct-processor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

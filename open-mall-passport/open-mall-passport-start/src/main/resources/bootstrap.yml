@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: open-mall-passport
+  profiles:
+    active: dev
+server:
+  port: 8081

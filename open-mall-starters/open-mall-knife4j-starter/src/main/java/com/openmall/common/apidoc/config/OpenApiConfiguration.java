@@ -8,7 +8,7 @@ import io.swagger.v3.oas.models.security.OAuthFlows;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +20,6 @@ import org.springframework.http.HttpHeaders;
  * @since 2024/7/3 20:53:53
  */
 @RequiredArgsConstructor
-@ConfigurationProperties(prefix = "spring.security.oauth2.authorization-server")
 public class OpenApiConfiguration {
 
     private final ApplicationContext applicationContext;
@@ -28,7 +27,8 @@ public class OpenApiConfiguration {
     /**
      * OAuth2 认证 endpoint
      */
-    private final String tokenUrl;
+    @Value("${spring.security.oauth2.authorization-server.token-url:}")
+    private String tokenUrl;
 
     @Bean
     public OpenAPI apiInfo() {

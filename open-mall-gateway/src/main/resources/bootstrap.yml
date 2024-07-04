@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: open-mall-gateway
+  profiles:
+    active: dev
+  cloud:
+    gateway:
+      routes:
+        - id: open-mall-passport
+          uri: lb://open-mall-passport
+          predicates:
+            - Path=/v1/passport/**
+          filters:
+            - StripPrefix=2

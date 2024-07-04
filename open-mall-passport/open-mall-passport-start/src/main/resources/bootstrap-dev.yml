@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        namespace: open-mall
+        file-extension: yaml
+        server-addr: localhost:8848
+      discovery:
+        server-addr: localhost:8848
+        namespace: open-mall
