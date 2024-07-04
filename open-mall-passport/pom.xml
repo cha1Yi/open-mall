@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.open-mall</groupId>
+        <artifactId>open-mall</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>open-mall-passport</artifactId>
+    <packaging>pom</packaging>
+
+    <name>open-mall-passport</name>
+    <modules>
+        <module>open-mall-passport-domain</module>
+        <module>open-mall-passport-application</module>
+        <module>open-mall-passport-infrastructure</module>
+        <module>open-mall-passport-interfaces</module>
+        <module>open-mall-passport-start</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+</project>
