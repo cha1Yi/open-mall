@@ -33,5 +33,17 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-redis-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-common-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
     </dependencies>
 </project>

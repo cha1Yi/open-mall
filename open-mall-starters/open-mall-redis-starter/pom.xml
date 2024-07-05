@@ -3,29 +3,26 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.open-mall</groupId>
-        <artifactId>open-mall-passport</artifactId>
+        <artifactId>open-mall-starters</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>open-mall-passport-interfaces</artifactId>
+    <artifactId>open-mall-redis-starter</artifactId>
     <packaging>jar</packaging>
 
-    <name>open-mall-passport-interfaces</name>
+    <name>open-mall-redis-starter</name>
 
     <properties>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.open-mall</groupId>
-            <artifactId>open-mall-passport-application</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
-
-
     </dependencies>
 </project>

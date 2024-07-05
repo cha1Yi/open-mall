@@ -38,6 +38,11 @@
             <version>${project.version}</version>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-redis-starter</artifactId>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 </project>

@@ -15,7 +15,6 @@
     <description>open-mall</description>
     <modules>
         <module>open-mall-starters</module>
-        <module>open-mall-starters/open-mall-knife4j-starter</module>
         <module>open-mall-passport</module>
         <module>open-mall-gateway</module>
     </modules>

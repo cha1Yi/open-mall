@@ -1,0 +1,4 @@
+com.open.mail.common.security.service.PermissionService
+com.open.mail.common.security.service.OpenMallAssessDeniedHandler
+com.open.mail.common.security.service.OpenMallAuthenticationEntryPoint
+com.open.mail.common.security.service.ResourceServerConfiguration
