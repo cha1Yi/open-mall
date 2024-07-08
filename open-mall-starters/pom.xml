@@ -17,6 +17,7 @@
         <module>open-mall-redis-starter</module>
         <module>open-mall-web-starter</module>
         <module>open-mall-security-starter</module>
+        <module>open-mall-jpa-starter</module>
     </modules>
     <properties>
         <hutool.version>5.8.26</hutool.version>

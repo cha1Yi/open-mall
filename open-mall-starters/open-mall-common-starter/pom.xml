@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>open-mall-common-starter</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>open-mall-common-starter</name>
 

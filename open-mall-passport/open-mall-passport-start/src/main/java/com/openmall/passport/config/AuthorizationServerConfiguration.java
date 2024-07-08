@@ -1,8 +1,6 @@
 package com.openmall.passport.config;
 
-import cn.hutool.captcha.generator.CodeGenerator;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.asymmetric.RSA;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -19,7 +17,6 @@ import com.open.mall.password.oauth2.extend.password.PasswordAuthenticationConve
 import com.open.mall.password.oauth2.extend.password.PasswordAuthenticationProvider;
 import com.open.mall.password.oauth2.handler.OpenMallAuthenticationFailureHandler;
 import com.open.mall.password.oauth2.handler.OpenMallAuthenticationSuccessHandler;
-import com.open.mall.password.service.MemberDetailsService;
 import com.openmail.common.constant.RedisKeyConstants;
 import com.openmail.common.utils.RSAUtils;
 import lombok.RequiredArgsConstructor;
