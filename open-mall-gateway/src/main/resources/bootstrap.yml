@@ -12,3 +12,12 @@ spring:
             - Path=/v1/passport/**
           filters:
             - StripPrefix=2
+    nacos:
+      config:
+        namespace: open-mall
+        file-extension: yaml
+        shared-configs:
+          - data-id: open-mall-common.yaml
+            refresh: true
+      discovery:
+        namespace: open-mall

@@ -27,7 +27,7 @@ public class OpenApiConfiguration {
     /**
      * OAuth2 认证 endpoint
      */
-    @Value("${spring.security.oauth2.authorization-server.token-url:}")
+    @Value("${spring.security.oauth2.authorization-server.token-uri:}")
     private String tokenUrl;
 
     @Bean

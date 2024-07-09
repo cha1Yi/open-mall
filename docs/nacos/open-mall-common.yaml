@@ -1,0 +1,13 @@
+# 验签公钥地址
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        token-uri: ${gateway.endpoint}/v1/passport/oauth2/token
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${gateway.endpoint}/v1/passport/oauth2/jwks
+
+# 网关地址
+gateway:
+  endpoint: http://localhost:8080

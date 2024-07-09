@@ -8,21 +8,23 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import com.open.mall.password.model.SystemUserDetails;
-import com.open.mall.password.model.jackson.SystemUserMixin;
-import com.open.mall.password.oauth2.extend.oidc.CustomOidcAuthenticationConverter;
-import com.open.mall.password.oauth2.extend.oidc.CustomOidcAuthenticationProvider;
-import com.open.mall.password.oauth2.extend.oidc.CustomOidcUserInfoService;
-import com.open.mall.password.oauth2.extend.password.PasswordAuthenticationConvertor;
-import com.open.mall.password.oauth2.extend.password.PasswordAuthenticationProvider;
-import com.open.mall.password.oauth2.handler.OpenMallAuthenticationFailureHandler;
-import com.open.mall.password.oauth2.handler.OpenMallAuthenticationSuccessHandler;
+import com.openmall.passport.model.SystemUserDetails;
+import com.openmall.passport.model.jackson.SystemUserMixin;
+import com.openmall.passport.oauth2.extend.oidc.CustomOidcAuthenticationConverter;
+import com.openmall.passport.oauth2.extend.oidc.CustomOidcAuthenticationProvider;
+import com.openmall.passport.oauth2.extend.oidc.CustomOidcUserInfoService;
+import com.openmall.passport.oauth2.extend.password.PasswordAuthenticationConvertor;
+import com.openmall.passport.oauth2.extend.password.PasswordAuthenticationProvider;
+import com.openmall.passport.oauth2.handler.OpenMallAuthenticationFailureHandler;
+import com.openmall.passport.oauth2.handler.OpenMallAuthenticationSuccessHandler;
 import com.openmail.common.constant.RedisKeyConstants;
 import com.openmail.common.utils.RSAUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -32,6 +34,7 @@ import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -255,9 +258,10 @@ public class AuthorizationServerConfiguration {
      */
     private void initMallAdminClient(JdbcRegisteredClientRepository registeredClientRepository) {
 
-        String clientId = "mall-admin";
-        String clientSecret = "123456";
+        String clientId = "open-mall-admin";
+        String clientSecret = "open-mall-admin";
         String clientName = "商城管理客户端";
+        ;
 
         /*
           如果使用明文，客户端认证时会自动升级加密方式，换句话说直接修改客户端密码，所以直接使用 bcrypt 加密避免不必要的麻烦
@@ -293,8 +297,8 @@ public class AuthorizationServerConfiguration {
      */
     private void initMallAppClient(JdbcRegisteredClientRepository registeredClientRepository) {
 
-        String clientId = "mall-app";
-        String clientSecret = "123456";
+        String clientId = "open-mall";
+        String clientSecret = "open-mall";
         String clientName = "商城APP客户端";
 
         // 如果使用明文，在客户端认证的时候会自动升级加密方式，直接使用 bcrypt 加密避免不必要的麻烦

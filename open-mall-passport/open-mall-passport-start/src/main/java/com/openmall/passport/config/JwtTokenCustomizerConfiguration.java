@@ -1,7 +1,7 @@
 package com.openmall.passport.config;
 
-import com.open.mall.password.model.MemberUserDetails;
-import com.open.mall.password.model.SystemUserDetails;
+import com.openmall.passport.model.MemberUserDetails;
+import com.openmall.passport.model.SystemUserDetails;
 import com.openmail.common.constant.JwtClaimConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

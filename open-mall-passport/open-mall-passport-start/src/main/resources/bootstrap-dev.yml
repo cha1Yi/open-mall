@@ -2,12 +2,9 @@ spring:
   cloud:
     nacos:
       config:
-        namespace: open-mall
-        file-extension: yaml
         server-addr: localhost:8848
       discovery:
         server-addr: localhost:8848
-        namespace: open-mall
   datasource:
     url: jdbc:mysql://localhost:3306/open-mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
