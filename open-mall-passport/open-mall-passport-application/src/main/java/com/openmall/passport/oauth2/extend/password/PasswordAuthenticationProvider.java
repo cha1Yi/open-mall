@@ -69,7 +69,7 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
         // 验证客户端是否支持授权类型(grant_type=password)
         if (registeredClient == null || !registeredClient.getAuthorizationGrantTypes()
                 .contains(PasswordAuthenticationToken.PASSWORD)) {
-            throw new OAuth2AuthenticationException(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
+            throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT), OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
         }
 
         // 生成用户名密码身份验证令牌

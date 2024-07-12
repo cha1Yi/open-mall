@@ -17,6 +17,7 @@
         <module>open-mall-starters</module>
         <module>open-mall-passport</module>
         <module>open-mall-gateway</module>
+        <module>open-mall-system</module>
     </modules>
     <packaging>pom</packaging>
     <url/>

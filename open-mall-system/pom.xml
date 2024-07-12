@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.open-mall</groupId>
+        <artifactId>open-mall</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>open-mall-system</artifactId>
+    <packaging>pom</packaging>
+
+    <name>open-mall-system</name>
+    <modules>
+        <module>open-mall-system-start</module>
+        <module>open-mall-system-infrastructure</module>
+        <module>open-mall-system-domain</module>
+        <module>open-mall-system-interfaces</module>
+        <module>open-mall-system-application</module>
+        <module>open-mall-system-api</module>
+    </modules>
+
+    <properties>
+    </properties>
+
+
+</project>

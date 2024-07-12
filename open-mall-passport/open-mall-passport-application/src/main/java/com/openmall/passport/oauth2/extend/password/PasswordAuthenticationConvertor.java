@@ -64,7 +64,7 @@ public class PasswordAuthenticationConvertor implements AuthenticationConverter 
                 .stream()
                 .filter(e -> !e.getKey().equals(OAuth2ParameterNames.GRANT_TYPE) && !e.getKey()
                         .equals(OAuth2ParameterNames.SCOPE))
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getFirst()));
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().get(0)));
 
         return new PasswordAuthenticationToken(authentication, requestedScopes, additionalParameters);
     }

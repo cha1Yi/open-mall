@@ -19,11 +19,6 @@
             <artifactId>open-mall-passport-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.open-mall</groupId>
-            <artifactId>open-mall-security-starter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- OAuth2 认证服务器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

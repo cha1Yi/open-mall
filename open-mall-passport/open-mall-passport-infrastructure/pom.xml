@@ -56,5 +56,11 @@
             <artifactId>open-mall-knife4j-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-dubbo-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

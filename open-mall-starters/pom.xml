@@ -18,10 +18,12 @@
         <module>open-mall-web-starter</module>
         <module>open-mall-security-starter</module>
         <module>open-mall-jpa-starter</module>
+        <module>open-mall-dubbo-starter</module>
     </modules>
     <properties>
         <hutool.version>5.8.26</hutool.version>
         <knife4j.version>4.5.0</knife4j.version>
+        <dubbo.version>3.2.14</dubbo.version>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +51,16 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct-processor.version}</version>
             </dependency>
+
+            <!-- Dubbo -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

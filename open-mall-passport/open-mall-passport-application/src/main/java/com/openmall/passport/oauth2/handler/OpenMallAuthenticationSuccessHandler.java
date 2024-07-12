@@ -2,7 +2,7 @@ package com.openmall.passport.oauth2.handler;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.openmail.common.vo.Result;
+import com.openmall.common.vo.Result;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

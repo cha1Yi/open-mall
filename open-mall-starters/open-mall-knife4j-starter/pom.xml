@@ -20,6 +20,7 @@
             <groupId>com.open-mall</groupId>
             <artifactId>open-mall-common-starter</artifactId>
             <version>${project.version}</version>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

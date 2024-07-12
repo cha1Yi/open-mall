@@ -1,4 +1,4 @@
-com.openmail.common.security.service.PermissionService
-com.openmail.common.security.extend.OpenMallAssessDeniedHandler
-com.openmail.common.security.extend.OpenMallAuthenticationEntryPoint
-com.openmail.common.security.config.ResourceServerConfiguration
+com.openmall.common.security.service.PermissionService
+com.openmall.common.security.config.ResourceServerConfig
+com.openmall.common.security.extend.OpenMallAssessDeniedHandler
+com.openmall.common.security.extend.OpenMallAuthenticationEntryPoint

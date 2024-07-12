@@ -1,8 +1,8 @@
 package com.openmall.gateway.config;
 
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
-import com.openmail.common.exception.ErrorCode;
-import com.openmail.common.vo.Result;
+import com.openmall.common.exception.ErrorCode;
+import com.openmall.common.vo.Result;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;

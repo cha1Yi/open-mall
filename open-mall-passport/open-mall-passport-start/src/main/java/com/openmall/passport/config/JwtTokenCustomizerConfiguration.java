@@ -2,7 +2,7 @@ package com.openmall.passport.config;
 
 import com.openmall.passport.model.MemberUserDetails;
 import com.openmall.passport.model.SystemUserDetails;
-import com.openmail.common.constant.JwtClaimConstants;
+import com.openmall.common.constant.JwtClaimConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +38,7 @@ public class JwtTokenCustomizerConfiguration {
                     if (principal instanceof SystemUserDetails systemUserDetails) {
                         claims.claim(JwtClaimConstants.USER_ID, systemUserDetails.getUserId());
 
-                        //将角色存入jwt中，解析JWT的角色用于鉴权的位置: com.open.mail.common.security.config.ResourceServerConfiguration.jwtAuthenticationConverter
+                        //将角色存入jwt中，解析JWT的角色用于鉴权的位置: com.openmall.common.security.config.ResourceServerConfiguration.jwtAuthenticationConverter
                         Set<String> authorities = AuthorityUtils.authorityListToSet(context.getPrincipal()
                                         .getAuthorities())
                                 .stream()

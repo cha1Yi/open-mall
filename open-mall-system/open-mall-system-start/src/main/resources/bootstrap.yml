@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: open-mall-system
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        namespace: open-mall
+        file-extension: yaml
+        shared-configs:
+          - data-id: open-mall-common.yaml
+            refresh: true
+      discovery:
+        namespace: open-mall
+server:
+  port: 8081
+

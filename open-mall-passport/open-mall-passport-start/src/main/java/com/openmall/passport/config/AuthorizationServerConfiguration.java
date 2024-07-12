@@ -15,10 +15,12 @@ import com.openmall.passport.oauth2.extend.oidc.CustomOidcAuthenticationProvider
 import com.openmall.passport.oauth2.extend.oidc.CustomOidcUserInfoService;
 import com.openmall.passport.oauth2.extend.password.PasswordAuthenticationConvertor;
 import com.openmall.passport.oauth2.extend.password.PasswordAuthenticationProvider;
+import com.openmall.passport.oauth2.extend.password.PasswordAuthenticationToken;
 import com.openmall.passport.oauth2.handler.OpenMallAuthenticationFailureHandler;
 import com.openmall.passport.oauth2.handler.OpenMallAuthenticationSuccessHandler;
-import com.openmail.common.constant.RedisKeyConstants;
-import com.openmail.common.utils.RSAUtils;
+import com.openmall.common.constant.RedisKeyConstants;
+import com.openmall.common.utils.RSAUtils;
+import com.openmall.passport.service.MemberDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -78,12 +80,15 @@ import java.util.UUID;
 @EnableWebSecurity
 public class AuthorizationServerConfiguration {
 
+    private final MemberDetailsService memberDetailsService;
 
     private final OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer;
 
     private final RedisTemplate<String, String> redisTemplate;
 
     private final CustomOidcUserInfoService customOidcUserInfoService;
+
+    private static final String CUSTOM_CONSENT_PAGE_URI = "/oauth2/consent";
 
 
     @Bean
@@ -280,7 +285,8 @@ public class AuthorizationServerConfiguration {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .authorizationGrantType(AuthorizationGrantType.PASSWORD) // 密码模式
+                // 密码模式
+                .authorizationGrantType(PasswordAuthenticationToken.PASSWORD)
                 .redirectUri("http://127.0.0.1:8080/authorized")
                 .postLogoutRedirectUri("http://127.0.0.1:8080/logged-out")
                 .scope(OidcScopes.OPENID)
