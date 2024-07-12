@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 101.43.115.229:8848
+      discovery:
+        server-addr: 101.43.115.229:8848
+# knife4j 网关聚合
+# https://doc.xiaominfo.com/docs/middleware-sources/spring-cloud-gateway/spring-gateway-introduction
+knife4j:
+  gateway:
+    enabled: true
+    # 指定服务发现的模式聚合微服务文档，并且是默认`default`分组
+    strategy: discover
+    discover:
+      enabled: true
+      # 聚合所有子服务(swagger2规范)，子服务是3规范则替换为openapi3
+      version: openapi3
+      # 需要排除的微服务(eg:网关服务)
+      excluded-services:
+        - open-mall-gateway
