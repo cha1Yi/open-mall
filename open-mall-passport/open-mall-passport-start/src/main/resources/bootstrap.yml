@@ -15,3 +15,15 @@ spring:
         namespace: open-mall
 server:
   port: 8081
+# dubbo
+dubbo:
+  application:
+    logger: slf4j
+    name: ${spring.application.name}
+    qos-port: 1${server.port}
+  registry:
+    address: nacos://${spring.cloud.nacos.discovery.server-addr}
+    parameters.namespace: ${spring.cloud.nacos.discovery.namespace}
+  protocol:
+    name: tri
+    port: -1

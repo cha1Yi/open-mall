@@ -21,5 +21,10 @@
             <artifactId>open-mall-system-application</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-system-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
