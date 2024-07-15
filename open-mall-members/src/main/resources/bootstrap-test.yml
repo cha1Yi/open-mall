@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 101.43.115.229:8848
+      discovery:
+        server-addr: 101.43.115.229:8848
+  datasource:
+    url: jdbc:mysql://${db.host}:${db.port}/open-mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: ${db.username}
+    password: ${db.password}
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update

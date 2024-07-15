@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: open-mall-members
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        namespace: open-mall
+        file-extension: yaml
+        shared-configs:
+          - data-id: open-mall-common.yaml
+            refresh: true
+      discovery:
+        namespace: open-mall
+server:
+  port: 8083
+# dubbo
+dubbo:
+  application:
+    logger: slf4j
+    name: ${spring.application.name}
+    qos-port: 1${server.port}
+  registry:
+    address: nacos://${spring.cloud.nacos.discovery.server-addr}
+    parameters.namespace: ${spring.cloud.nacos.discovery.namespace}
+  protocol:
+    name: tri
+    port: -1

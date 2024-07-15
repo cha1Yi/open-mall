@@ -7,28 +7,16 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>open-mall-system</artifactId>
+    <artifactId>open-mall-members</artifactId>
     <packaging>jar</packaging>
 
-    <name>open-mall-system</name>
+    <name>open-mall-members</name>
+    <url>http://maven.apache.org</url>
 
     <properties>
     </properties>
 
-
     <dependencies>
-        <dependency>
-            <groupId>com.open-mall</groupId>
-            <artifactId>open-mall-common-starter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.open-mall</groupId>
-            <artifactId>open-mall-dubbo-starter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
@@ -61,17 +49,27 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-common-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-dubbo-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
-
     <build>
+        <finalName>${project.artifactId}-${project.parent.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.openmall.system.SystemApplication</mainClass>
+                    <mainClass>com.openmall.members.MembersApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
