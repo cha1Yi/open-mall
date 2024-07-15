@@ -16,10 +16,6 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.open-mall</groupId>
-            <artifactId>open-mall-passport-infrastructure</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
     </dependencies>
 </project>
