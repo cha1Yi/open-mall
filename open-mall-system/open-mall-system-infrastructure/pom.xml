@@ -25,6 +25,11 @@
         </dependency>
         <dependency>
             <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-system-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.open-mall</groupId>
             <artifactId>open-mall-dubbo-starter</artifactId>
             <version>${project.version}</version>
         </dependency>

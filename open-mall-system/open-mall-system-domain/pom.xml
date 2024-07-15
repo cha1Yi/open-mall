@@ -16,10 +16,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.open-mall</groupId>
-            <artifactId>open-mall-system-infrastructure</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
     </dependencies>
 </project>

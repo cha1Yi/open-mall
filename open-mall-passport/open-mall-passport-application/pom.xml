@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.open-mall</groupId>
-            <artifactId>open-mall-passport-domain</artifactId>
+            <artifactId>open-mall-system-infrastructure</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- OAuth2 认证服务器-->
