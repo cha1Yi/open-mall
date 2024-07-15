@@ -8,20 +8,80 @@
     </parent>
 
     <artifactId>open-mall-system</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>open-mall-system</name>
-    <modules>
-        <module>open-mall-system-start</module>
-        <module>open-mall-system-infrastructure</module>
-        <module>open-mall-system-domain</module>
-        <module>open-mall-system-interfaces</module>
-        <module>open-mall-system-application</module>
-        <module>open-mall-system-api</module>
-    </modules>
 
     <properties>
     </properties>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-common-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-dubbo-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-knife4j-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.openmall.system.SystemApplication</mainClass>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

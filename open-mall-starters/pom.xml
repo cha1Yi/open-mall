@@ -18,6 +18,7 @@
         <module>open-mall-web-starter</module>
         <module>open-mall-security-starter</module>
         <module>open-mall-jpa-starter</module>
+        <module>open-mall-dubbo-api</module>
         <module>open-mall-dubbo-starter</module>
     </modules>
     <properties>
