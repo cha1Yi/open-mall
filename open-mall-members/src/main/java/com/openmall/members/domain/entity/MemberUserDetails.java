@@ -22,10 +22,16 @@ public class MemberUserDetails extends BaseEntity {
      * 用户id
      */
     @Id
-    private Long userId;
+    private Long memberId;
 
     /**
      * 昵称
      */
     private String nickname;
+
+    /**
+     * 手机号
+     */
+    private String mobile;
+
 }

@@ -1,4 +1,4 @@
-package com.openmall.system.domain.entity;
+package com.openmall.members.domain.entity;
 
 import com.openmall.jpa.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -6,21 +6,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 用户基础表
+ *  会员用户
+ *
  * @author wuxuan
- * @since 2024/7/15 17:23:21
+ * @since 2024/7/15 17:30:05
  */
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "system_rbac_user",indexes = {@Index(name = "idx_username", columnList = "username")})
 @Data
-public class RbacUser extends BaseEntity {
-    /**
-     * 用户ID
-     */
+@Table(name = "system_member_user",indexes = {@Index(name = "idx_username", columnList = "username")})
+public class MemberUser extends BaseEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue()
     private Long id;
+
 
     /**
      * 用户名
@@ -41,5 +41,4 @@ public class RbacUser extends BaseEntity {
      * 启用状态
      */
     private boolean enabled;
-
 }

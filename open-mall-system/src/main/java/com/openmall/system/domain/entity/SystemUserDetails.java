@@ -20,7 +20,7 @@ public class SystemUserDetails extends BaseEntity {
 
     /**
      * 用户ID
-     * @see RbacUser#getId()
+     * @see SystemUser#getId()
      */
     @Id
     private Long userId;
