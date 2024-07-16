@@ -60,7 +60,21 @@
             <artifactId>open-mall-jpa-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-web-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-security-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.open-mall</groupId>
+            <artifactId>open-mall-redis-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
     </dependencies>
 

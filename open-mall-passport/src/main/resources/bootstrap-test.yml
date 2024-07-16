@@ -14,3 +14,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  data:
+    redis:
+      host: ${redis.host}
+      port: ${redis.port:6379}
+      password: ${redis.password:null}
+      database: ${redis.database:6}
+      timeout: ${redis.timeout:3000}
+      lettuce:
+        pool:
+          min-idle: 1
