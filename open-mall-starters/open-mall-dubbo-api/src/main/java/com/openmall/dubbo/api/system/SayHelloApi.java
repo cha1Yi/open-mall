@@ -1,4 +1,4 @@
-package com.openmall.api.system;
+package com.openmall.dubbo.api.system;
 
 /**
  * @author wuxuan

@@ -1,6 +1,6 @@
-package com.openmall.system.interfaces.consumer;
+package com.openmall.system.interfaces.provider;
 
-import com.openmall.api.system.SayHelloApi;
+import com.openmall.dubbo.api.system.SayHelloApi;
 import org.apache.dubbo.config.annotation.DubboService;
 
 /**

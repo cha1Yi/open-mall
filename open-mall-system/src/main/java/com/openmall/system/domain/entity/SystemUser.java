@@ -1,9 +1,12 @@
 package com.openmall.system.domain.entity;
 
 import com.openmall.jpa.entity.BaseEntity;
+import com.openmall.system.domain.entity.enums.UserStateEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDateTime;
 
 /**
  * 用户基础表
@@ -12,7 +15,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "system_user",indexes = {@Index(name = "idx_username", columnList = "username")})
+@Table(name = "system_user", indexes = {@Index(name = "idx_username", columnList = "username")})
 @Data
 public class SystemUser extends BaseEntity {
     /**
@@ -33,13 +36,14 @@ public class SystemUser extends BaseEntity {
     private String password;
 
     /**
-     * 锁定状态
+     * 用户状态
      */
-    private boolean locked;
+    @Enumerated(EnumType.STRING)
+    private UserStateEnum userState;
 
     /**
-     * 启用状态
+     * 用户密码过期时间
      */
-    private boolean enabled;
+    private LocalDateTime passwordExpireTime;
 
 }
