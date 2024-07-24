@@ -1,26 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <style>
+        .sidebar > h1 > a > img {
+            width: 120px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
-  <div id="app">waiting...</div>
-  <script>
+<div id="app">waiting...</div>
+<script>
     window.$docsify = {
-      name: 'open-mall',
-      repo: 'https://gitee.com/wuxuanchai/open-mall.git'
+        //logo 和 name 互斥，只能有一个生效
+        // name: "<span style='color:red'>Open Mall 设计文档</span>",
+        logo: './favicon.png',
+        repo: 'https://gitee.com/wuxuanchai/open-mall.git',
+        //固定封面
+        onlyCover: true,
+        homepage: '/prd',
+        autoHeader: true,
+        coverpage: true,
+        loadSidebar: true,
+        subMaxLevel: 3,
+        loadNavbar: true,
+        relativePath: true,
+        // 搜索
+        search: 'auto',
+        // 字数统计
+        count: {
+            countable: true,
+            fontsize: '0.9em',
+            color: 'rgb(90,90,90)',
+            language: 'chinese'
+        },
+        mergeNavbar: true,
     }
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+</script>
+<!-- Docsify v4 -->
+<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+<!--全文搜索-->
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+<!--代码copy-->
+<script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+<!--数字统计-->
+<script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+<!--放大图片-->
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+<!--emoji-->
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+<!--翻页工具-->
+<script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
 </body>
 </html>
