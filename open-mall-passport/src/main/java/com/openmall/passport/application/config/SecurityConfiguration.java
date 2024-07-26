@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * 默认安全配置
  */
+@Setter
 @ConfigurationProperties(prefix = "security")
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
@@ -29,7 +30,6 @@ public class SecurityConfiguration {
     /**
      * 白名单路径列表
      */
-    @Setter
     private List<String> whiteList;
 
     /**

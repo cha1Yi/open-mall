@@ -1,6 +1,7 @@
 package com.openmall.passport.application.oauth2.extend.password;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.nacos.shaded.com.google.common.base.Splitter;
 import com.openmall.passport.application.OAuth2EndpointUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.util.MultiValueMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.Spliterator;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +47,7 @@ public class PasswordAuthenticationConvertor implements AuthenticationConverter 
         Set<String> requestedScopes = null;
 
         if (StrUtil.isNotBlank(scope)) {
+            //noinspection VulnerableCodeUsages
             requestedScopes = new HashSet<>(StrUtil.split(scope, " "));
         }
 

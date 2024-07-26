@@ -1,8 +1,10 @@
 package com.openmall.passport.application.oauth2.extend.oidc;
 
 import cn.hutool.core.lang.Assert;
+import lombok.Getter;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,7 +16,9 @@ import java.util.function.Consumer;
  * @author wuxuan
  * @since 2024/7/5 17:15:17
  */
+@Getter
 public class CustomOidcUserInfo extends OidcUserInfo {
+    @Serial
     private static final long serialVersionUID = 610L;
     private final Map<String, Object> claims;
 
@@ -22,10 +26,6 @@ public class CustomOidcUserInfo extends OidcUserInfo {
         super(claims);
         Assert.notEmpty(claims, "claims cannot be empty");
         this.claims = Collections.unmodifiableMap(new LinkedHashMap(claims));
-    }
-
-    public Map<String, Object> getClaims() {
-        return this.claims;
     }
 
     public boolean equals(Object obj) {

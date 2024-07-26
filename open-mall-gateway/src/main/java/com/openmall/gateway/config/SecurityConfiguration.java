@@ -19,6 +19,7 @@ import java.util.List;
  * @author wuxuan
  * @since 2024/7/4 14:46:58
  */
+@Setter
 @ConfigurationProperties(prefix = "security")
 @Configuration(proxyBeanMethods = false)
 @EnableWebFluxSecurity
@@ -28,7 +29,6 @@ public class SecurityConfiguration {
     /**
      * 黑名单请求列表
      */
-    @Setter
     private List<String> blackList;
 
     @Bean
@@ -36,7 +36,7 @@ public class SecurityConfiguration {
         return http.authorizeExchange(
                         exchange -> {
                             if (CollectionUtil.isNotEmpty(blackList)) {
-                                exchange.pathMatchers(Convert.toStrArray(blackList)).authenticated();
+                                exchange.pathMatchers(blackList.toArray(new String[]{})).authenticated();
                             }
                             exchange.anyExchange().permitAll();
                         }

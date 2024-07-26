@@ -39,7 +39,8 @@ public class CustomOidcAuthenticationProvider implements AuthenticationProvider 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         OidcUserInfoAuthenticationToken userInfoAuthentication = (OidcUserInfoAuthenticationToken) authentication;
         AbstractOAuth2TokenAuthenticationToken<?> accessTokenAuthentication = null;
-        if (AbstractOAuth2TokenAuthenticationToken.class.isAssignableFrom(userInfoAuthentication.getPrincipal().getClass())) {
+        if (AbstractOAuth2TokenAuthenticationToken.class.isAssignableFrom(userInfoAuthentication.getPrincipal()
+                .getClass())) {
             accessTokenAuthentication = (AbstractOAuth2TokenAuthenticationToken) userInfoAuthentication.getPrincipal();
         }
 
@@ -60,7 +61,10 @@ public class CustomOidcAuthenticationProvider implements AuthenticationProvider 
                     // 从认证结果中获取userInfo
                     CustomOidcUserInfo customOidcUserInfo = (CustomOidcUserInfo) userInfoAuthentication.getUserInfo();
                     // 从authorizedAccessToken中获取授权范围
-                    Set<String> scopeSet = (HashSet<String>) authorizedAccessToken.getClaims().get("scope");
+                    //noinspection unchecked
+                    Set<String> scopeSet = Optional.ofNullable(authorizedAccessToken.getClaims())
+                            .map(item -> (HashSet<String>) item.get("scope"))
+                            .orElse(new HashSet<>());
                     // 获取授权范围对应userInfo的字段信息
                     Map<String, Object> claims = DefaultOidcUserInfoMapper.getClaimsRequestedByScope(customOidcUserInfo.getClaims(), scopeSet);
                     if (log.isTraceEnabled()) {
@@ -92,7 +96,7 @@ public class CustomOidcAuthenticationProvider implements AuthenticationProvider 
         @Override
         public CustomOidcUserInfo apply(OidcUserInfoAuthenticationContext authenticationContext) {
             OAuth2Authorization authorization = authenticationContext.getAuthorization();
-            OidcIdToken idToken = authorization.getToken(OidcIdToken.class).getToken();
+            OidcIdToken idToken = Objects.requireNonNull(authorization.getToken(OidcIdToken.class)).getToken();
             OAuth2AccessToken accessToken = authenticationContext.getAccessToken();
             Map<String, Object> scopeRequestedClaims = getClaimsRequestedByScope(idToken.getClaims(), accessToken.getScopes());
             return new CustomOidcUserInfo(scopeRequestedClaims);

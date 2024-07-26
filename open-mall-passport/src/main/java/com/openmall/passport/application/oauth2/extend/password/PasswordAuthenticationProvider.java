@@ -61,6 +61,7 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
         this.tokenGenerator = tokenGenerator;
     }
 
+    @SuppressWarnings("VulnerableCodeUsages")
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         PasswordAuthenticationToken passwordAuthenticationToken = (PasswordAuthenticationToken) authentication;
