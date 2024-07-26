@@ -22,7 +22,7 @@
         <module>open-mall-dubbo-starter</module>
     </modules>
     <properties>
-        <hutool.version>5.8.26</hutool.version>
+        <hutool.version>5.8.29</hutool.version>
         <knife4j.version>4.5.0</knife4j.version>
         <dubbo.version>3.2.14</dubbo.version>
     </properties>
