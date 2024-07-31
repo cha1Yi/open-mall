@@ -11,6 +11,9 @@ spring:
     password: ${db.password}
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
   data:
     redis:
       host: ${redis.host}

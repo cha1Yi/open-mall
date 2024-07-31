@@ -1,5 +1,9 @@
 package com.openmall.dubbo.api.system.dto;
 
+import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -8,39 +12,45 @@ import java.util.List;
  * @author wuxuan
  * @since 2024/7/23 14:51:05
  */
-public record SystemUserDetailVO(
-        /*
-          用户ID
-         */
+@Data
+public class SystemUserDetailVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 610L;
 
-        Long id,
+    /**
+     * 用户ID
+     */
 
-        /*
-          用户名
-         */
-        String username,
+    private Long id;
 
-        /*
-          密码
-         */
-        String password,
+    /**
+     *  用户名
+     */
+    private String username;
 
-        /*
-          锁定状态
-         */
-        boolean locked,
+    /**
+     *密码
+     */
+    private String password;
 
-        /*
-          启用状态
-         */
-        boolean enabled,
+    /**
+     *锁定状态
+     */
+    private boolean locked;
 
-        /*
-          用户密码过期时间
-         */
-        LocalDateTime passwordExpireTime,
-        /*
-          授权的权限
-         */
-        List<String> grantedAuthorities) {
+    /**
+     *启用状态
+     */
+    private boolean enabled;
+
+    /**
+     * 用户密码失效时间时间
+     */
+    private LocalDateTime passwordExpireTime;
+    /**
+     *授权的权限
+     */
+    private List<String> grantedAuthorities;
+
+
 }

@@ -27,9 +27,7 @@ import org.springframework.security.oauth2.server.authorization.token.DefaultOAu
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -85,21 +83,22 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
             usernamePasswordAuthentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         } catch (Exception e) {
             // 需要将其他类型的异常转换为 OAuth2AuthenticationException 才能被自定义异常捕获处理，逻辑源码 OAuth2TokenEndpointFilter#doFilterInternal
-            throw new OAuth2AuthenticationException(e.getMessage());
+            throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR, "用户认证异常", ERROR_URI), e);
         }
 
 
         // 验证申请访问范围（Scope）
         Set<String> authorizedScopes = registeredClient.getScopes();
-        Set<String> requestedScopes = passwordAuthenticationToken.getScopes();
+        Set<String> requestedScopes = Optional.ofNullable(passwordAuthenticationToken.getScopes()).orElse(Set.of());
 
         if (CollectionUtil.isNotEmpty(requestedScopes)) {
             Set<String> unauthorizedScopes = requestedScopes.stream()
-                    .filter(requestedScope -> !authorizedScopes.contains(requestedScope))
+                    .filter(requestedScope -> !registeredClient.getScopes().contains(requestedScope))
                     .collect(Collectors.toSet());
             if (CollectionUtil.isNotEmpty(unauthorizedScopes)) {
                 throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_SCOPE);
             }
+            authorizedScopes = new LinkedHashSet<>(requestedScopes);
         }
 
         // 访问令牌构造器
@@ -107,7 +106,7 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
                 .registeredClient(registeredClient)
                 .principal(usernamePasswordAuthentication)
                 .authorizationServerContext(AuthorizationServerContextHolder.getContext())
-                .authorizedScopes(requestedScopes)
+                .authorizedScopes(authorizedScopes)
                 .authorizationGrantType(PasswordAuthenticationToken.PASSWORD)
                 .authorizationGrant(passwordAuthenticationToken);
 

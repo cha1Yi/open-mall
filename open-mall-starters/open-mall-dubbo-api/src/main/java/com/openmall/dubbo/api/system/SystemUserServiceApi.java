@@ -7,7 +7,7 @@ import com.openmall.dubbo.api.system.dto.SystemUserDetailVO;
  * @author wuxuan
  * @since 2024/7/23 14:45:54
  */
-public interface SystemUserService {
+public interface SystemUserServiceApi {
 
     /**
      * 根据用户名获取系统用户信息

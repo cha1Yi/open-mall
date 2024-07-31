@@ -12,6 +12,12 @@ spring:
             - Path=/v1/passport/**
           filters:
             - StripPrefix=2
+        - id: open-mall-system
+          uri: lb://open-mall-system
+          predicates:
+            - Path=/v1/system/**
+          filters:
+            - StripPrefix=2
     nacos:
       config:
         namespace: open-mall

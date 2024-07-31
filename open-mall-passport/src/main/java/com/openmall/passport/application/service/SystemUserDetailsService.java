@@ -1,14 +1,14 @@
 package com.openmall.passport.application.service;
 
+import com.openmall.dubbo.api.system.SystemUserServiceApi;
+import com.openmall.dubbo.api.system.dto.SystemUserDetailVO;
 import com.openmall.passport.application.model.SystemUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 
 /**
  * 系统用户信息加载
@@ -18,8 +18,13 @@ import java.util.HashSet;
 @Service
 @RequiredArgsConstructor
 public class SystemUserDetailsService implements UserDetailsService {
+
+    @DubboReference
+    private SystemUserServiceApi systemUserServiceApi;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new SystemUserDetails(1L, "wuxuan", PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("ch199407") , 1, 1L, true, true, true, true, new HashSet<>());
+        SystemUserDetailVO systemUserDetailVO = this.systemUserServiceApi.getByUsername(username);
+        return new SystemUserDetails(systemUserDetailVO);
     }
 }

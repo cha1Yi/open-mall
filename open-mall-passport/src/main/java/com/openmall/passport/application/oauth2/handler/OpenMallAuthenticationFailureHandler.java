@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -36,7 +37,7 @@ public class OpenMallAuthenticationFailureHandler implements AuthenticationFailu
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         if (exception instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
             OAuth2Error error = oAuth2AuthenticationException.getError();
-            log.error("登陆失败:{}",error, exception);
+            log.error("登陆失败:{}", error, exception.getCause());
             try (ServletServerHttpResponse servletServerHttpResponse = new ServletServerHttpResponse(response)) {
                 accessTokenHttpResponseConverter.write(Result.fail(ErrorCode.TOKEN_INVALID.getCode()
                         .value(), error.getErrorCode()), MediaType.APPLICATION_JSON, servletServerHttpResponse);

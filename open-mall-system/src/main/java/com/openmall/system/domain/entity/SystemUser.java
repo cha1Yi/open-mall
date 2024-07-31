@@ -42,8 +42,8 @@ public class SystemUser extends BaseEntity {
     private UserStateEnum userState;
 
     /**
-     * 用户密码过期时间
+     * 用户密码生效时间
      */
-    private LocalDateTime passwordExpireTime;
+    private LocalDateTime passwordEffectiveTime;
 
 }

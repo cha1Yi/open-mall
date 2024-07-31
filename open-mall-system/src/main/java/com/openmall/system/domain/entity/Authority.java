@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "system_authority", indexes = {@Index(name = "idx_username", columnList = "username")})
+@Table(name = "system_authority")
 @Data
 public class Authority extends BaseEntity {
     /**
