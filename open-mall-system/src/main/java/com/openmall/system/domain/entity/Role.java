@@ -14,7 +14,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "system_role", indexes = {@Index(name = "idx_parent", columnList = "parent")})
+@Table(name = "system_role", indexes = {@Index(name = "idx_parent_id", columnList = "parent_id")})
 @Data
 public class Role extends BaseEntity {
     /**

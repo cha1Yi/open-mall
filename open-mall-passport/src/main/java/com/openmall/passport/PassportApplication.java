@@ -1,8 +1,5 @@
 package com.openmall.passport;
 
-import com.openmall.dubbo.api.system.SayHelloApi;
-import jakarta.annotation.PostConstruct;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -21,10 +18,4 @@ public class PassportApplication {
     }
 
 
-    @DubboReference
-    private SayHelloApi sayHelloApi;
-    @PostConstruct
-    public void init(){
-        this.sayHelloApi.sayHello();
-    }
 }

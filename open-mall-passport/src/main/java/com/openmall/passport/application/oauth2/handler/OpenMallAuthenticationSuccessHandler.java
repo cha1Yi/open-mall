@@ -65,12 +65,12 @@ public class OpenMallAuthenticationSuccessHandler implements AuthenticationSucce
 
         Map<String, Object> tokenResponseParameters = this.accessTokenResponseParametersConverter.convert(accessTokenResponse);
         try (ServletServerHttpResponse servletServerHttpResponse = new ServletServerHttpResponse(response)) {
-            if ("client".equals(clientId)) {
+//            if ("client".equals(clientId)) {
                 // Knife4j测试客户端ID（Knife4j自动填充的 access_token 须原生返回，不能被包装成业务码数据格式）
                 this.accessTokenHttpResponseConverter.write(ObjectUtil.defaultIfNull(tokenResponseParameters, Map.of()), MediaType.APPLICATION_JSON, servletServerHttpResponse);
-            } else {
-                this.accessTokenHttpResponseConverter.write(Result.success(tokenResponseParameters), MediaType.APPLICATION_JSON, servletServerHttpResponse);
-            }
+//            } else {
+//                this.accessTokenHttpResponseConverter.write(Result.success(tokenResponseParameters), MediaType.APPLICATION_JSON, servletServerHttpResponse);
+//            }
         }
 
     }

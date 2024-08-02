@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,47 +39,54 @@ import java.util.List;
  * @author haoxr
  * @since 3.0.0
  */
+@EnableConfigurationProperties(SecurityProperties.class)
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 @Slf4j
-@EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfig {
 
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
-    private final SecurityProperties securityProperties;
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector, SecurityProperties securityProperties) throws Exception {
 
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         List<String> whiteList = securityProperties.getWhiteList();
-        log.info("whitelist path:\n{}", JSONUtil.toJsonStr(whiteList));
-        http.authorizeHttpRequests((requests) -> {
-            if (CollectionUtil.isNotEmpty(whiteList)) {
-                for (String whitelistPath : whiteList) {
-                    requests.requestMatchers(mvcMatcherBuilder.pattern(whitelistPath)).permitAll();
-                }
-            }
-            requests.anyRequest().authenticated();
-        }).csrf(AbstractHttpConfigurer::disable);
-        http.oauth2ResourceServer(resourceServerConfigurer -> resourceServerConfigurer.jwt(jwtConfigurer -> jwtAuthenticationConverter())
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler));
+        log.info("whitelist path:{}", JSONUtil.toJsonStr(whiteList));
+
+        http.authorizeHttpRequests((requests) ->
+                        {
+                            if (CollectionUtil.isNotEmpty(whiteList)) {
+                                for (String whitelistPath : whiteList) {
+                                    requests.requestMatchers(
+                                            mvcMatcherBuilder.pattern(whitelistPath)).permitAll();
+                                }
+                            }
+                            // 放行swagger相关请求
+                            requests.requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**"),
+                                    AntPathRequestMatcher.antMatcher("/doc.html"),
+                                    AntPathRequestMatcher.antMatcher("/swagger-resources/**"),
+                                    AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
+                                    AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll();
+                            requests.anyRequest().authenticated();
+                        }
+                )
+                .csrf(AbstractHttpConfigurer::disable)
+        ;
+        http
+                .oauth2ResourceServer(resourceServerConfigurer ->
+                        resourceServerConfigurer
+                                .jwt(jwtConfigurer -> jwtAuthenticationConverter())
+                                .authenticationEntryPoint(authenticationEntryPoint)
+                                .accessDeniedHandler(accessDeniedHandler)
+                );
         return http.build();
     }
 
-    /**
-     * 不走过滤器链的放行配置
-     */
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**"), AntPathRequestMatcher.antMatcher("/doc.html"), AntPathRequestMatcher.antMatcher("/swagger-resources/**"), AntPathRequestMatcher.antMatcher("/v3/api-docs/**"), AntPathRequestMatcher.antMatcher("/swagger-ui/**"));
-    }
 
     @Bean
     MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {

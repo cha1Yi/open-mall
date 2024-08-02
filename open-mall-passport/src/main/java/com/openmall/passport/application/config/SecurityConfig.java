@@ -21,16 +21,16 @@ import java.util.List;
 /**
  * 默认安全配置
  */
-@Setter
 @ConfigurationProperties(prefix = "security")
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfig {
 
     /**
      * 白名单路径列表
      */
-    private List<String> whiteList;
+    @Setter
+    private List<String> whitelistPaths;
 
     /**
      * Spring Security 安全过滤器链配置
@@ -44,11 +44,16 @@ public class SecurityConfiguration {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         http.authorizeHttpRequests((requests) ->
                         {
-                            if (CollectionUtil.isNotEmpty(whiteList)) {
-                                for (String whitelistPath : whiteList) {
+                            if (CollectionUtil.isNotEmpty(whitelistPaths)) {
+                                for (String whitelistPath : whitelistPaths) {
                                     requests.requestMatchers(mvcMatcherBuilder.pattern(whitelistPath)).permitAll();
                                 }
                             }
+                            requests.requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**"),
+                                    AntPathRequestMatcher.antMatcher("/doc.html"),
+                                    AntPathRequestMatcher.antMatcher("/swagger-resources/**"),
+                                    AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
+                                    AntPathRequestMatcher.antMatcher("/swagger-ui/**")).permitAll();
                             requests.anyRequest().authenticated();
                         }
                 )
@@ -56,21 +61,6 @@ public class SecurityConfiguration {
                 .formLogin(Customizer.withDefaults());
 
         return http.build();
-    }
-
-
-    /**
-     * 不走过滤器链的放行配置
-     */
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(
-                AntPathRequestMatcher.antMatcher("/webjars/**"),
-                AntPathRequestMatcher.antMatcher("/doc.html"),
-                AntPathRequestMatcher.antMatcher("/swagger-resources/**"),
-                AntPathRequestMatcher.antMatcher("/v3/api-docs/**"),
-                AntPathRequestMatcher.antMatcher("/swagger-ui/**")
-        );
     }
 
 

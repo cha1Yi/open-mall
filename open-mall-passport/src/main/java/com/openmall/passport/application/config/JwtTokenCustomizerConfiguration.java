@@ -6,6 +6,7 @@ import com.openmall.passport.application.model.SystemUserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -33,11 +34,11 @@ public class JwtTokenCustomizerConfiguration {
     public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() {
         return context -> {
             if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType()) && context.getPrincipal() instanceof UsernamePasswordAuthenticationToken) {
-                Optional.ofNullable(context.getPrincipal()).ifPresent(principal -> {
+                Optional.ofNullable(context.getPrincipal()).map(each->((Authentication) each).getPrincipal()).ifPresent(principal -> {
                     JwtClaimsSet.Builder claims = context.getClaims();
                     if (principal instanceof SystemUserDetails systemUserDetails) {
                         claims.claim(JwtClaimConstants.USER_ID, systemUserDetails.getUserId());
-
+                        claims.claim(JwtClaimConstants.USERNAME, systemUserDetails.getUsername());
                         //将角色存入jwt中，解析JWT的角色用于鉴权的位置: com.openmall.common.security.config.ResourceServerConfiguration.jwtAuthenticationConverter
                         Set<String> authorities = AuthorityUtils.authorityListToSet(context.getPrincipal()
                                         .getAuthorities())
