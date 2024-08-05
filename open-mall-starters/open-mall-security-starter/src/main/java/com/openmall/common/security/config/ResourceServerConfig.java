@@ -79,7 +79,9 @@ public class ResourceServerConfig {
                                 .jwt(jwtConfigurer -> jwtAuthenticationConverter())
                                 .authenticationEntryPoint(authenticationEntryPoint)
                                 .accessDeniedHandler(accessDeniedHandler)
-                );
+                )
+        ;
+
         return http.build();
     }
 
