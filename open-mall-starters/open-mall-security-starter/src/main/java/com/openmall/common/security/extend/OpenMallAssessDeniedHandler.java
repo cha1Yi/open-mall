@@ -2,6 +2,7 @@ package com.openmall.common.security.extend;
 
 import cn.hutool.json.JSONUtil;
 import com.openmall.common.exception.ErrorCode;
+import com.openmall.common.json.JsonUtils;
 import com.openmall.common.vo.Result;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +31,6 @@ public class OpenMallAssessDeniedHandler implements AccessDeniedHandler {
         log.error("Access Denied", accessDeniedException);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.FORBIDDEN.value());
-        response.getWriter().write(JSONUtil.toJsonStr(Result.fail(ErrorCode.FORBIDDEN)));
+        response.getWriter().write(JsonUtils.toJson(Result.fail(ErrorCode.FORBIDDEN)));
     }
 }

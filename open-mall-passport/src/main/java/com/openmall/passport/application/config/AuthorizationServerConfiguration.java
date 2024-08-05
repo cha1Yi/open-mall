@@ -129,7 +129,7 @@ public class AuthorizationServerConfiguration {
                 )
         ;
 
-        return http.exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN), new MediaTypeRequestMatcher(MediaType.APPLICATION_JSON)))
+        return http.exceptionHandling( exceptions -> exceptions.defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN), new MediaTypeRequestMatcher(MediaType.APPLICATION_JSON)))
                 .oauth2ResourceServer(oauth2ResourceServerConfigurer -> oauth2ResourceServerConfigurer.jwt(Customizer.withDefaults()))
                 .build();
         // @formatter:on
@@ -240,6 +240,7 @@ public class AuthorizationServerConfiguration {
         // Will be used by the ConsentController
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
     }
+
 
 
     @Bean

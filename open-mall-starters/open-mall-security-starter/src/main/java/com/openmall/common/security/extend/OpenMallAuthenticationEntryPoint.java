@@ -2,6 +2,7 @@ package com.openmall.common.security.extend;
 
 import cn.hutool.json.JSONUtil;
 import com.openmall.common.exception.ErrorCode;
+import com.openmall.common.json.JsonUtils;
 import com.openmall.common.vo.Result;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,6 @@ public class OpenMallAuthenticationEntryPoint implements AuthenticationEntryPoin
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(JSONUtil.toJsonStr(Result.fail(ErrorCode.TOKEN_INVALID)));
+        response.getWriter().write(JsonUtils.toJson(Result.fail(ErrorCode.TOKEN_INVALID)));
     }
 }
