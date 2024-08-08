@@ -1,6 +1,6 @@
 package com.openmall.dubbo.api.system;
 
-import com.openmall.dubbo.api.system.dto.SystemUserDetailVO;
+import com.openmall.dubbo.api.system.vo.SystemUserDetailVO;
 
 /**
  * 系统用户服务类

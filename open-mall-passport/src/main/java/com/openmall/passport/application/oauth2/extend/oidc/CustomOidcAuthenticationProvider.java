@@ -63,14 +63,10 @@ public class CustomOidcAuthenticationProvider implements AuthenticationProvider 
                     // 从authorizedAccessToken中获取授权范围
                     //noinspection unchecked
                     Set<String> scopeSet = Optional.ofNullable(authorizedAccessToken.getClaims())
-                            .map(item -> (HashSet<String>) item.get("scope"))
+                            .map(item -> new HashSet<>((Collection<String>) item.get("scope")))
                             .orElse(new HashSet<>());
                     // 获取授权范围对应userInfo的字段信息
                     Map<String, Object> claims = DefaultOidcUserInfoMapper.getClaimsRequestedByScope(customOidcUserInfo.getClaims(), scopeSet);
-                    if (log.isTraceEnabled()) {
-                        log.trace("Authenticated user info request");
-                    }
-
                     return new CustomOidcToken(accessTokenAuthentication, new CustomOidcUserInfo(claims));
                 }
             }
@@ -86,9 +82,15 @@ public class CustomOidcAuthenticationProvider implements AuthenticationProvider 
 
 
     private static final class DefaultOidcUserInfoMapper implements Function<OidcUserInfoAuthenticationContext, CustomOidcUserInfo> {
-        private static final List<String> EMAIL_CLAIMS = Arrays.asList("email", "email_verified");
-        private static final List<String> PHONE_CLAIMS = Arrays.asList("phone_number", "phone_number_verified");
-        private static final List<String> PROFILE_CLAIMS = Arrays.asList("username", "nickname", "status", "profile");
+        private static final String ADDRESS_SCOPE = "address";
+        private static final String EMAIL_SCOPE = "email";
+        private static final String PHONE_SCOPE = "phone";
+        private static final String PROFILE_SCOPE = "profile";
+
+        private static final List<String> EMAIL_CLAIMS = List.of("email");
+        private static final List<String> ADDRESS_CLAIMS = List.of("address");
+        private static final List<String> PHONE_CLAIMS = List.of("mobile");
+        private static final List<String> PROFILE_CLAIMS = List.of("username", "realName", "nickname", "avatar");
 
         private DefaultOidcUserInfoMapper() {
         }
@@ -104,24 +106,27 @@ public class CustomOidcAuthenticationProvider implements AuthenticationProvider 
 
         /**
          * 根据不同权限抽取不同数据
+         * @param requestedScopes 申请的范围：openid profile email phone
+         * @param claims 认证结果
          */
         private static Map<String, Object> getClaimsRequestedByScope(Map<String, Object> claims, Set<String> requestedScopes) {
             Set<String> scopeRequestedClaimNames = new HashSet<>(32);
             scopeRequestedClaimNames.add("sub");
 
-            if (requestedScopes.contains("address")) {
-                scopeRequestedClaimNames.add("address");
+
+            if (requestedScopes.contains(ADDRESS_SCOPE)) {
+                scopeRequestedClaimNames.addAll(ADDRESS_CLAIMS);
             }
 
-            if (requestedScopes.contains("email")) {
+            if (requestedScopes.contains(EMAIL_SCOPE)) {
                 scopeRequestedClaimNames.addAll(EMAIL_CLAIMS);
             }
 
-            if (requestedScopes.contains("phone")) {
+            if (requestedScopes.contains(PHONE_SCOPE)) {
                 scopeRequestedClaimNames.addAll(PHONE_CLAIMS);
             }
 
-            if (requestedScopes.contains("profile")) {
+            if (requestedScopes.contains(PROFILE_SCOPE)) {
                 scopeRequestedClaimNames.addAll(PROFILE_CLAIMS);
             }
 

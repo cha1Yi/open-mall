@@ -19,7 +19,7 @@ server:
 dubbo:
   application:
     logger: slf4j
-    name: ${spring.application.name}
+    name: ${spring.application.name}-dubbo-services
     qos-port: 1${server.port}
   registry:
     address: nacos://${spring.cloud.nacos.discovery.server-addr}

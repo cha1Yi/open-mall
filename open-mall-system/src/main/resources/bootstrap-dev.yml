@@ -24,7 +24,3 @@ spring:
       lettuce:
         pool:
           min-idle: 1
-logging:
-  level:
-    org:
-      springframework: debug

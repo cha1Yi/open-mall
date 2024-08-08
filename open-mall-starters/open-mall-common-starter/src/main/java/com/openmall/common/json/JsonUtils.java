@@ -1,8 +1,11 @@
 package com.openmall.common.json;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,6 +17,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.serializer.Deserializer;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.File;
@@ -430,6 +434,7 @@ public final class JsonUtils {
             javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer());
             javaTimeModule.addDeserializer(Date.class, new DateDeserializer());
             objectMapper.registerModule(javaTimeModule);
+            objectMapper.addMixIn(Long.class, Object.class);
 
             // 序列化不包含属性为Null的字段
 //            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

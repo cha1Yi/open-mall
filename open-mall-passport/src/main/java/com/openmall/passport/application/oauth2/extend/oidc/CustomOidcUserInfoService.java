@@ -1,8 +1,13 @@
 package com.openmall.passport.application.oauth2.extend.oidc;
 
+import com.openmall.dubbo.api.system.SystemUserServiceApi;
+import com.openmall.dubbo.api.system.vo.SystemUserDetailVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * 自定义 OIDC 用户信息服务
@@ -15,34 +20,33 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomOidcUserInfoService {
 
-//    private final UserFeignClient userFeignClient;
+    @DubboReference
+    private SystemUserServiceApi systemUserServiceApi;
 
 
     public CustomOidcUserInfo loadUserByUsername(String username) {
-//        UserAuthInfo userAuthInfo = null;
-//        try {
-//            userAuthInfo = userFeignClient.getUserAuthInfo(username);
-//            if (userAuthInfo == null) {
-//                return null;
-//            }
-//            return new CustomOidcUserInfo(createUser(userAuthInfo));
-//        } catch (Exception e) {
-//            log.error("获取用户信息失败", e);
-//            return null;
-//        }
-        return null;
+        try {
+            SystemUserDetailVO systemUserDetailVO = this.systemUserServiceApi.getByUsername(username);
+            if (systemUserDetailVO == null) {
+                return null;
+            }
+            return new CustomOidcUserInfo(createUser(systemUserDetailVO));
+        } catch (Exception e) {
+            log.error("获取用户信息失败", e);
+            return null;
+        }
     }
 
-//    private Map<String, Object> createUser(UserAuthInfo userAuthInfo) {
-//        return CustomOidcUserInfo.customBuilder()
-//                .username(userAuthInfo.getUsername())
-//                .nickname(userAuthInfo.getNickname())
-//                .status(userAuthInfo.getStatus())
-//                .phoneNumber(userAuthInfo.getMobile())
-//                .email(userAuthInfo.getEmail())
-//                .profile(userAuthInfo.getAvatar())
-//                .build()
-//                .getClaims();
-//    }
+    private Map<String, Object> createUser(SystemUserDetailVO vo) {
+        return CustomOidcUserInfo.customBuilder()
+                .username(vo.getUsername())
+                .nickname(vo.getNickname())
+                .locked(vo.isLocked())
+                .mobile(vo.getMobile())
+                .enabled(vo.isEnabled())
+                .email(vo.getEmail())
+                .build()
+                .getClaims();
+    }
 
 }

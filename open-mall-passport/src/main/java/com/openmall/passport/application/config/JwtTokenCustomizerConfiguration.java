@@ -34,21 +34,27 @@ public class JwtTokenCustomizerConfiguration {
     public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() {
         return context -> {
             if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType()) && context.getPrincipal() instanceof UsernamePasswordAuthenticationToken) {
-                Optional.ofNullable(context.getPrincipal()).map(each->((Authentication) each).getPrincipal()).ifPresent(principal -> {
-                    JwtClaimsSet.Builder claims = context.getClaims();
-                    if (principal instanceof SystemUserDetails systemUserDetails) {
-                        claims.claim(JwtClaimConstants.USER_ID, systemUserDetails.getUserId());
-                        claims.claim(JwtClaimConstants.USERNAME, systemUserDetails.getUsername());
-                        //将角色存入jwt中，解析JWT的角色用于鉴权的位置: com.openmall.common.security.config.ResourceServerConfiguration.jwtAuthenticationConverter
-                        Set<String> authorities = AuthorityUtils.authorityListToSet(context.getPrincipal()
-                                        .getAuthorities())
-                                .stream()
-                                .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
-                        claims.claim(JwtClaimConstants.AUTHORITIES, authorities);
-                    } else if (principal instanceof MemberUserDetails memberUserDetails) {
-                        claims.claim(JwtClaimConstants.MEMBER_ID, memberUserDetails.getId());
-                    }
-                });
+                Optional.ofNullable(context.getPrincipal())
+                        .map(each -> ((Authentication) each).getPrincipal())
+                        .ifPresent(principal -> {
+                            JwtClaimsSet.Builder claims = context.getClaims();
+                            if (principal instanceof SystemUserDetails systemUserDetails) {
+                                claims.claim(JwtClaimConstants.SUB, systemUserDetails.getUserId());
+                                claims.claim(JwtClaimConstants.NAME, systemUserDetails.getUsername());
+                                //将角色存入jwt中，解析JWT的角色用于鉴权的位置: com.openmall.common.security.config.ResourceServerConfiguration.jwtAuthenticationConverter
+                                Set<String> authorities = AuthorityUtils.authorityListToSet(context.getPrincipal()
+                                                .getAuthorities())
+                                        .stream()
+                                        .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
+                                claims.claim(JwtClaimConstants.AUTHORITIES, authorities);
+                                Optional.ofNullable(systemUserDetails.getEmail()).ifPresent(value->{
+                                    claims.claim(JwtClaimConstants.EMAIL,value);
+                                });
+                                claims.claim(JwtClaimConstants.NICKNAME,systemUserDetails.getNickname());
+                            } else if (principal instanceof MemberUserDetails memberUserDetails) {
+                                claims.claim(JwtClaimConstants.SUB, memberUserDetails.getId());
+                            }
+                        });
             }
 
         };

@@ -1,5 +1,6 @@
 package com.openmall.dubbo;
 
+import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,5 +11,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableDubbo(scanBasePackages = "com.openmall")
+@DubboComponentScan
 public class DubboConfiguration {
 }

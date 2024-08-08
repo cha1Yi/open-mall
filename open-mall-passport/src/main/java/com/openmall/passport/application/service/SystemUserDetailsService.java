@@ -1,7 +1,7 @@
 package com.openmall.passport.application.service;
 
 import com.openmall.dubbo.api.system.SystemUserServiceApi;
-import com.openmall.dubbo.api.system.dto.SystemUserDetailVO;
+import com.openmall.dubbo.api.system.vo.SystemUserDetailVO;
 import com.openmall.passport.application.model.SystemUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboReference;

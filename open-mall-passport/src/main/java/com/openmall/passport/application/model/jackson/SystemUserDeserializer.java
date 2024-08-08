@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -43,7 +44,7 @@ public class SystemUserDeserializer extends JsonDeserializer<SystemUserDetails> 
     public SystemUserDetails deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         ObjectMapper mapper = (ObjectMapper) jp.getCodec();
         JsonNode jsonNode = mapper.readTree(jp);
-        Set<? extends GrantedAuthority> authorities = mapper.convertValue(jsonNode.get("authorities"), SIMPLE_GRANTED_AUTHORITY_SET);
+//        Set<SimpleGrantedAuthority> authorities = mapper.convertValue(jsonNode.get("authorities"), SIMPLE_GRANTED_AUTHORITY_SET);
         JsonNode passwordNode = readJsonNode(jsonNode, "password");
         Long userId = readJsonNode(jsonNode, "userId").asLong();
         String username = readJsonNode(jsonNode, "username").asText();
@@ -52,7 +53,9 @@ public class SystemUserDeserializer extends JsonDeserializer<SystemUserDetails> 
         boolean accountNonExpired = readJsonNode(jsonNode, "accountNonExpired").asBoolean();
         boolean credentialsNonExpired = readJsonNode(jsonNode, "credentialsNonExpired").asBoolean();
         boolean accountNonLocked = readJsonNode(jsonNode, "accountNonLocked").asBoolean();
-        SystemUserDetails result = new SystemUserDetails(userId, username, password, authorities, accountNonLocked, enabled, credentialsNonExpired, accountNonExpired);
+        String email = readJsonNode(jsonNode, "email").asText();
+        String nickname = readJsonNode(jsonNode, "nickname").asText();
+        SystemUserDetails result = new SystemUserDetails(userId, username, password, new HashSet<>(), accountNonLocked, enabled, credentialsNonExpired, accountNonExpired, email, nickname);
         if (passwordNode.asText(null) == null) {
             result.eraseCredentials();
         }

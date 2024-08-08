@@ -35,6 +35,8 @@ public class SystemUserDetails extends BaseEntity {
      */
     private String email;
 
+    private String mobile;
+
     /**
      * 头像
      */

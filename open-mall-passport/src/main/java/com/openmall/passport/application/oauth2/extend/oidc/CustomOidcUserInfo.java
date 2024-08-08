@@ -71,28 +71,20 @@ public class CustomOidcUserInfo extends OidcUserInfo {
             return this.claim("nickname", nickname);
         }
 
-        public Builder description(String description) {
-            return this.claim("description", description);
+        public Builder locked(boolean locked) {
+            return this.claim("locked", locked);
         }
 
-        public Builder status(Integer status) {
-            return this.claim("status", status);
+        public Builder enabled(boolean enabled) {
+            return this.claim("enabled", enabled);
         }
 
-        public Builder phoneNumber(String phoneNumber) {
-            return this.claim("phone_number", phoneNumber);
+        public Builder mobile(String mobile) {
+            return this.claim("mobile", mobile);
         }
 
         public Builder email(String email) {
             return this.claim("email", email);
-        }
-
-        public Builder profile(String profile) {
-            return this.claim("profile", profile);
-        }
-
-        public Builder address(String address) {
-            return this.claim("address", address);
         }
 
         public CustomOidcUserInfo build() {

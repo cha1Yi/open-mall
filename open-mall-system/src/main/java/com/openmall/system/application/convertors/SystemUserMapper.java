@@ -1,6 +1,6 @@
 package com.openmall.system.application.convertors;
 
-import com.openmall.dubbo.api.system.dto.SystemUserDetailVO;
+import com.openmall.dubbo.api.system.vo.SystemUserDetailVO;
 import com.openmall.system.application.dto.CreateSystemUserDTO;
 import com.openmall.system.domain.entity.SystemUser;
 import com.openmall.system.domain.entity.SystemUserDetails;
@@ -22,11 +22,11 @@ import java.time.LocalDateTime;
 public interface SystemUserMapper {
     SystemUserMapper INSTANCE = Mappers.getMapper(SystemUserMapper.class);
 
-    @Mapping(target = "passwordExpireTime", source = "passwordEffectiveTime", qualifiedByName = "getPasswordExpireTime")
-    @Mapping(target = "locked", source = "userState", qualifiedByName = "isLocked")
-    @Mapping(target = "enabled", source = "userState", qualifiedByName = "isEnabled")
+    @Mapping(target = "passwordExpireTime", source = "systemUser.passwordEffectiveTime", qualifiedByName = "getPasswordExpireTime")
+    @Mapping(target = "locked", source = "systemUser.userState", qualifiedByName = "isLocked")
+    @Mapping(target = "enabled", source = "systemUser.userState", qualifiedByName = "isEnabled")
     @Mapping(target = "grantedAuthorities", ignore = true)
-    SystemUserDetailVO toSystemUserDetailVO(SystemUser systemUser);
+    SystemUserDetailVO toSystemUserDetailVO(SystemUser systemUser, SystemUserDetails systemUserDetails);
 
 
     @Named("isLocked")

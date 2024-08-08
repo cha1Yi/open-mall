@@ -1,5 +1,6 @@
 package com.openmall.passport.application.oauth2.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.openmall.common.exception.ErrorCode;
 import com.openmall.common.json.JsonUtils;
 import com.openmall.common.vo.Result;
@@ -37,7 +38,7 @@ public class OpenMallAuthenticationFailureHandler implements AuthenticationFailu
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         if (exception instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
             OAuth2Error error = oAuth2AuthenticationException.getError();
-            log.error("登陆失败:{}", error, exception.getCause());
+            log.error(StrUtil.format("登陆失败:{}", error.getDescription()), exception);
             try (ServletServerHttpResponse servletServerHttpResponse = new ServletServerHttpResponse(response)) {
                 accessTokenHttpResponseConverter.write(Result.fail(ErrorCode.TOKEN_INVALID.getCode()
                         .value(), error.getErrorCode()), MediaType.APPLICATION_JSON, servletServerHttpResponse);

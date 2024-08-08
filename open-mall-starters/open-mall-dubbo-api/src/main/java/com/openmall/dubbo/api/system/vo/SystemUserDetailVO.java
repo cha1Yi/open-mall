@@ -1,4 +1,4 @@
-package com.openmall.dubbo.api.system.dto;
+package com.openmall.dubbo.api.system.vo;
 
 import lombok.Data;
 
@@ -20,13 +20,18 @@ public class SystemUserDetailVO implements Serializable {
     /**
      * 用户ID
      */
-
     private Long id;
 
     /**
      *  用户名
      */
     private String username;
+
+    private String nickname;
+
+    private String mobile;
+
+    private String email;
 
     /**
      *密码

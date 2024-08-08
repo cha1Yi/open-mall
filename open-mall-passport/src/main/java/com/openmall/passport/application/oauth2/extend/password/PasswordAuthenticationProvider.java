@@ -91,14 +91,12 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
         Set<String> authorizedScopes = registeredClient.getScopes();
         Set<String> requestedScopes = Optional.ofNullable(passwordAuthenticationToken.getScopes()).orElse(Set.of());
 
-        if (CollectionUtil.isNotEmpty(requestedScopes)) {
-            Set<String> unauthorizedScopes = requestedScopes.stream()
-                    .filter(requestedScope -> !registeredClient.getScopes().contains(requestedScope))
-                    .collect(Collectors.toSet());
-            if (CollectionUtil.isNotEmpty(unauthorizedScopes)) {
-                throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_SCOPE);
-            }
-            authorizedScopes = new LinkedHashSet<>(requestedScopes);
+        if (!authorizedScopes.containsAll(requestedScopes)) {
+            throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_SCOPE);
+        }
+
+        if (requestedScopes.isEmpty()) {
+            requestedScopes = authorizedScopes;
         }
 
         // 访问令牌构造器
@@ -169,6 +167,8 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
             idToken = null;
         }
 
+
+        //保存会话结果
         OAuth2Authorization authorization = authorizationBuilder.build();
         this.authorizationService.save(authorization);
 

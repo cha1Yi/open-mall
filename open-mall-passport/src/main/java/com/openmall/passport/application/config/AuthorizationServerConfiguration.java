@@ -9,6 +9,7 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.openmall.common.constant.RedisKeyConstants;
+import com.openmall.common.json.JsonUtils;
 import com.openmall.common.utils.RSAUtils;
 import com.openmall.passport.application.model.SystemUserDetails;
 import com.openmall.passport.application.model.jackson.SystemUserMixin;
@@ -31,7 +32,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -207,32 +207,29 @@ public class AuthorizationServerConfiguration {
 
 
     @Bean
-    public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
-        // 创建基于JDBC的OAuth2授权服务。这个服务使用JdbcTemplate和客户端仓库来存储和检索OAuth2授权数据。
-        JdbcOAuth2AuthorizationService service = new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+    public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate,
+                                                           RegisteredClientRepository registeredClientRepository) {
+        JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper rowMapper =
+                new JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper(registeredClientRepository);
+        JdbcOAuth2AuthorizationService.OAuth2AuthorizationParametersMapper oAuth2AuthorizationParametersMapper =
+                new JdbcOAuth2AuthorizationService.OAuth2AuthorizationParametersMapper();
+        JdbcOAuth2AuthorizationService authorizationService =
+                new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+        ObjectMapper objectMapper = JsonUtils.ObjectMapperFactory.createObjectMapper();
 
-        // 创建并配置用于处理数据库中OAuth2授权数据的行映射器。
-        JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper rowMapper = new JdbcOAuth2AuthorizationService.OAuth2AuthorizationRowMapper(registeredClientRepository);
-        rowMapper.setLobHandler(new DefaultLobHandler());
-        ObjectMapper objectMapper = new ObjectMapper();
         ClassLoader classLoader = JdbcOAuth2AuthorizationService.class.getClassLoader();
         List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
         objectMapper.registerModules(securityModules);
         objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
-        // You will need to write the Mixin for your class so Jackson can marshall it.
 
-        // 添加自定义Mixin，用于序列化/反序列化特定的类。
-        // Mixin类需要自行实现，以便Jackson可以处理这些类的序列化。
-        objectMapper.addMixIn(SystemUserDetails.class, SystemUserMixin.class);
         objectMapper.addMixIn(Long.class, Object.class);
-
-        // 将配置好的ObjectMapper设置到行映射器中。
+        objectMapper.addMixIn(SystemUserDetails.class, SystemUserMixin.class);
         rowMapper.setObjectMapper(objectMapper);
+        oAuth2AuthorizationParametersMapper.setObjectMapper(objectMapper);
+        authorizationService.setAuthorizationRowMapper(rowMapper);
+        authorizationService.setAuthorizationParametersMapper(oAuth2AuthorizationParametersMapper);
 
-        // 将自定义的行映射器设置到授权服务中。
-        service.setAuthorizationRowMapper(rowMapper);
-
-        return service;
+        return authorizationService;
     }
 
     @Bean
@@ -240,7 +237,6 @@ public class AuthorizationServerConfiguration {
         // Will be used by the ConsentController
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
     }
-
 
 
     @Bean
@@ -267,7 +263,6 @@ public class AuthorizationServerConfiguration {
         String clientId = "open-mall-admin";
         String clientSecret = "open-mall-admin";
         String clientName = "商城管理客户端";
-        ;
 
         /*
           如果使用明文，客户端认证时会自动升级加密方式，换句话说直接修改客户端密码，所以直接使用 bcrypt 加密避免不必要的麻烦
@@ -293,7 +288,11 @@ public class AuthorizationServerConfiguration {
                 .postLogoutRedirectUri("http://127.0.0.1:8080/logged-out")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
-                .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofDays(1)).build())
+                .tokenSettings(TokenSettings.builder()
+                        .reuseRefreshTokens(false)
+                        .refreshTokenTimeToLive(Duration.ofDays(60))
+                        .accessTokenTimeToLive(Duration.ofDays(10))
+                        .build())
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
         registeredClientRepository.save(mallAppClient);
@@ -328,7 +327,7 @@ public class AuthorizationServerConfiguration {
                 .postLogoutRedirectUri("http://127.0.0.1:8080/logged-out")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
-                .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofDays(1)).build())
+                .tokenSettings(TokenSettings.builder().build())
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
         registeredClientRepository.save(mallAppClient);
