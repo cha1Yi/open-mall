@@ -6,6 +6,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -28,6 +32,16 @@ public class SystemUserController {
 //    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<String> get() {
         return ResponseEntity.ok("hello world");
+    }
+
+    @GetMapping("/foo")
+    public Result<String> get1(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+        return Result.success(principal.getAttribute("sub") + " is the subject");
+    }
+
+    @GetMapping("/foo2")
+    public Result<String> get2(Authentication principal) {
+        return Result.success(principal.getName() + " is the subject");
     }
 
 }

@@ -39,7 +39,8 @@ public class JwtTokenCustomizerConfiguration {
                         .ifPresent(principal -> {
                             JwtClaimsSet.Builder claims = context.getClaims();
                             if (principal instanceof SystemUserDetails systemUserDetails) {
-                                claims.claim(JwtClaimConstants.SUB, systemUserDetails.getUserId());
+//                                claims.claim(JwtClaimConstants.SUB, systemUserDetails.getUsername());
+                                claims.claim(JwtClaimConstants.USER_ID,systemUserDetails.getUserId());
                                 claims.claim(JwtClaimConstants.NAME, systemUserDetails.getUsername());
                                 //将角色存入jwt中，解析JWT的角色用于鉴权的位置: com.openmall.common.security.config.ResourceServerConfiguration.jwtAuthenticationConverter
                                 Set<String> authorities = AuthorityUtils.authorityListToSet(context.getPrincipal()

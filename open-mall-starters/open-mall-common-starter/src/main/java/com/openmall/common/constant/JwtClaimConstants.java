@@ -42,4 +42,5 @@ public interface JwtClaimConstants {
     String AUTHORITIES = "authorities";
 
 
+    String USER_ID = "userId";
 }

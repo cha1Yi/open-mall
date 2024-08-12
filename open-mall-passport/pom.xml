@@ -83,11 +83,11 @@
             <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
         </dependency>
 
-        <!-- OAuth2 客户端（第三方登录 微信、Gitee、Github、QQ）-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency>
+<!--        &lt;!&ndash; OAuth2 客户端（第三方登录 微信、Gitee、Github、QQ）&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.security</groupId>

@@ -194,6 +194,7 @@ public class AuthorizationServerConfiguration {
     }
 
 
+
     @Bean
     public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
         JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);

@@ -11,8 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
@@ -35,6 +35,7 @@ public class SecurityConfig {
      */
     @Setter
     private List<String> whitelistPaths;
+
 
     /**
      * Spring Security 安全过滤器链配置
@@ -62,8 +63,12 @@ public class SecurityConfig {
                         }
                 )
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exceptions->exceptions.defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN), new MediaTypeRequestMatcher(MediaType.APPLICATION_JSON)))
-                .formLogin(Customizer.withDefaults());
+                .exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN), new MediaTypeRequestMatcher(MediaType.APPLICATION_JSON)))
+                .formLogin(Customizer.withDefaults())
+                .sessionManagement(sessionManagementConfigurer ->
+                        sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+        ;
 
         return http.build();
     }

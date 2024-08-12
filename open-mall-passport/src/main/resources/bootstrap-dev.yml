@@ -24,6 +24,11 @@ spring:
       lettuce:
         pool:
           min-idle: 1
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${gateway.endpoint}/v1/passport
 logging:
   level:
     org.springframework.security: DEBUG
